@@ -31,9 +31,10 @@ async function run() {
     const database = client.db("hire_loop_db_user");
     const jobCollection = database.collection("jobs");
 
-    app.post("/jobs", async (req, res) => {
+    app.post("/api/jobs", async (req, res) => {
       const job = req.body;
-      const result = await jobCollection(job);
+      const result = await jobCollection.insertOne(job);
+      console.log(result);
 
       res.send(result);
     });
@@ -45,7 +46,7 @@ async function run() {
     );
   } finally {
     // Ensures that the client will close when you finish/error
-    await client.close();
+    // await client.close();
   }
 }
 run().catch(console.dir);
