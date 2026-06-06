@@ -30,6 +30,7 @@ async function run() {
 
     const database = client.db("hire_loop_db_user");
     const jobCollection = database.collection("jobs");
+    const companyCollection = database.collection("companies");
 
     app.get("/api/jobs", async (req, res) => {
       const query = {};
@@ -47,9 +48,15 @@ async function run() {
     app.post("/api/jobs", async (req, res) => {
       const job = req.body;
       const result = await jobCollection.insertOne(job);
-      console.log(result);
 
       res.send(result);
+    });
+
+    // company related api
+    app.post("/api/companies", async (req, res) => {
+      const company = req.body;
+      const result = await companyCollection.insertOne(company);
+      res.json(result);
     });
 
     // Send a ping to confirm a successful connection
